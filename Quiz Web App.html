@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <title>Quiz App</title>
+  <style>
+    body{
+      padding: 0;
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      box-sizing: 0;
+      background-image: linear-gradient(to bottom right, rgb(147, 255, 246), rgb(255, 255, 131));
+    }
+    .container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .quiz_box{
+      width: 500px;
+      height: auto;
+      border: 2px solid rgb(255, 255, 255);
+      border-radius: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    h3{
+      font-size: 25px;
+      padding: 10px;
+    }
+    .answer_box{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .answer_box button{
+      width: 400px;
+      height: 60px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      margin-left: 8px;
+      font-weight: 600;
+      border: 1px solid rgb(198, 198, 198);
+      background-color: rgb(235, 235, 235);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .answer_box button:hover{
+      background-color: rgb(218, 218, 218);
+    }
+    .answer_box .next_btn{
+      width: auto;   
+      padding: 20px 25px;
+      margin-left: auto;
+      margin-right: 50px;
+      background-color: rgb(0, 153, 0);
+      color: white;
+    }
+    .answer_box .next_btn:hover{
+      background-color: rgb(107, 107, 107);
+    }
+    .answer_box .green {
+      background-color: #4caf50;
+      color: white;
+      transition: opacity 0.3s ease;
+    }
+
+    .answer_box .green:hover{
+      background-color: #4caf50;
+      opacity: 0.9;
+    }
+
+    .answer_box .red {
+      background-color: #f44336;
+      color: white;
+      transition: opacity 0.3s ease;
+    }
+
+    .answer_box .red:hover{
+      background-color: #f44336;
+      opacity: 0.9;
+    }
+    .check_option{
+      font-size: 15px;
+      padding-left: 15px;
+      font-weight: 600;
+      color: red;
+    }
+    .show_score{
+      font-size: 20px;
+      text-align: center;
+    }
+    .report{
+      font-size: 20px;
+      text-align: center;
+      color: rgb(91, 91, 255);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="quiz_box">
+      <h3 class="question">Question</h3>
+      <hr>
+      <p class="check_option">Select one option</p>
+      <div class="answer_box">
+      <button id="a">answer</button>
+      <button id="b">answer</button>
+      <button id="c">answer</button>
+      <button id="d">answer</button>
+      <button class="next_btn">Next</button>
+      <p class="show_score"></p>
+      <a href="./images/funny.webp" class="report">Check report</a>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+const QuestionBank = [
+  {
+    question:"Q1. Which language is mainly used to style web pages?",
+    a:"a) HTML",
+    b:"b) JavaScript",
+    c:"c) CSS",
+    d:"d) Python",
+    correct:"c",
+  },
+   {
+    question:"Q2. What does CPU stand for?",
+    a:"a) Central Program Unit",
+    b:"b) Central Processing Unit",
+    c:"c) Computer Personal Unit",
+    d:"d) Control Processing Unit",
+    correct:"b",
+  },
+   {
+    question:"Q3. Which data structure follows the LIFO principle?",
+    a:"a) Queue",
+    b:"b) Stack",
+    c:"c) Array",
+    d:"d) Linked List",
+    correct:"b",
+  },
+   {
+    question:"Q4. Which symbol is used for comments in JavaScript?",
+    a:"a) <!-- -->",
+    b:"b) #",
+    c:"c) //",
+    d:"d) /**/",
+    correct:"c",
+  },
+   {
+    question:"Q5. Which planet is known as the Red Planet?",
+    a:"a) Venus",
+    b:"b) Jupiter",
+    c:"c) Mars",
+    d:"d) Saturn",
+    correct:"c",
+  },
+   {
+    question:"Q6. What does HTML stand for?",
+    a:"a) High Text Machine Language",
+    b:"b) Hyper Text Markup Language",
+    c:"c) Hyperlinks and Text Markup Language",
+    d:"d) Home Tool Markup Language",
+    correct:"b",
+  },
+   {
+    question:"Q7. Which keyword is used to declare a variable in JavaScript?",
+    a:"a) int",
+    b:"b) var",
+    c:"c) float",
+    d:"d) string",
+    correct:"b",
+  },
+   {
+    question:"Q8. Which device is used to input text into a computer?",
+    a:"a) Monitor",
+    b:"b) Mouse",
+    c:"c) Keyboard",
+    d:"d) Printer",
+    correct:"c",
+  },
+   {
+    question:"Q9. Which of the following is NOT an operating system?",
+    a:"a) Windows",
+    b:"b) Linux",
+    c:"c) Oracle",
+    d:"d) macOs",
+    correct:"c",
+  },
+   {
+    question:"Q10. What is the correct file extension for JavaScript files?",
+    a:"a) .java",
+    b:"b) .js",
+    c:"c) .javascript",
+    d:"d) .jsx",
+    correct:"b",
+  },
+];
+let currentQuestion = 0;
+let answered = false;
+let showMarks = false;
+let marks = 0;
+const questionEle = document.querySelector(".question");
+const optionA = document.getElementById("a");
+const optionB = document.getElementById("b");
+const optionC = document.getElementById("c");
+const optionD = document.getElementById("d");
+const next = document.querySelector(".next_btn");
+const selectOption = document.querySelector(".check_option");
+const score = document.querySelector(".show_score");
+const checkReport = document.querySelector(".report");
+
+selectOption.style.display = "none";
+score.style.display = "none";
+checkReport.style.display = "none";
+
+
+function showQuestion() {
+  let q = QuestionBank[currentQuestion];
+  questionEle.innerText = q.question;
+  optionA.innerText = q.a;
+  optionB.innerText = q.b;
+  optionC.innerText = q.c;
+  optionD.innerText = q.d;
+}
+showQuestion();
+
+
+const next_move = next.addEventListener("click",() => {
+  if (!answered) {
+    selectOption.style.display = "block"; 
+    return;
+  }
+
+  if(next.innerText === "Submit" && currentQuestion === QuestionBank.length - 1){
+    score.style.display = "block";
+    score.innerText = `Congratulations 🥳🥳 you got ${marks} marks out of 10.`
+    checkReport.style.display = "block";
+    if(marks >=5 && marks <= 7){
+      score.innerText = `Keep it up👍, you got ${marks} marks out of 10.`
+      checkReport.style.display = "block";
+    }
+    else if(marks < 5){
+      score.innerText = `Your are Fail 😞, ${marks} marks out of 10.`
+      checkReport.style.display = "block";
+    }
+    next.disabled = true;
+    return;
+  }
+
+  
+  if(currentQuestion<QuestionBank.length - 1){
+    currentQuestion++;
+    options.forEach(btn => {
+      btn.classList.remove("green", "red");
+      btn.disabled = false;
+});
+
+  answered = false;
+  selectOption.style.display = "none";
+  showQuestion();
+  }
+  if (currentQuestion === QuestionBank.length - 1) {
+    next.innerText = "Submit";
+  }
+
+});
+
+
+
+const options = document.querySelectorAll(".answer_box button:not(.next_btn)");
+options.forEach(option => {
+  option.addEventListener("click", () => {
+    answered = true;
+    selectOption.style.display = "none";
+    const selected = option.id
+    const correctOption = QuestionBank[currentQuestion].correct;
+
+    if(selected == correctOption){
+      option.classList.add("green");
+      marks+=1;
+    }
+    else if(selected != correctOption){
+      option.classList.add("red");
+      const correctBtn = document.getElementById(correctOption);
+      correctBtn.classList.add("green");
+    }
+    options.forEach(btn => btn.disabled = true);
+  });
+})
+
+</script>
+</html>
